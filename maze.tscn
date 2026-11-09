@@ -1,0 +1,156 @@
+[gd_scene format=3 uid="uid://ccayfglgutw1u"]
+
+[ext_resource type="Script" uid="uid://cuadh182n2f2a" path="res://maze.gd" id="1_h41xc"]
+[ext_resource type="Texture2D" uid="uid://dvqssswhh8say" path="res://pixil-frame-0(1).png" id="2_nw8dj"]
+[ext_resource type="Texture2D" uid="uid://ctycjuf415bvg" path="res://MAZESQUARES.png" id="2_u11kd"]
+[ext_resource type="Script" uid="uid://dq3toqr7u2tcg" path="res://character_body_2d.gd" id="3_1nuxl"]
+[ext_resource type="Texture2D" uid="uid://bd27j0g4h7xg8" path="res://back.png" id="4_nw8dj"]
+[ext_resource type="Script" uid="uid://d2ae4obruju71" path="res://object.gd" id="5_pgab2"]
+[ext_resource type="Texture2D" uid="uid://j8u4mt0v4sw2" path="res://front.png" id="5_xhimc"]
+[ext_resource type="Texture2D" uid="uid://oaplcaha2eqk" path="res://side.png" id="6_glv4d"]
+[ext_resource type="Texture2D" uid="uid://c3kxr13a6fj0v" path="res://seeweed.png" id="9_xhimc"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xhimc"]
+texture = ExtResource("2_nw8dj")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1nuxl"]
+texture = ExtResource("2_u11kd")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_5h11f"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_1nuxl")
+sources/0 = SubResource("TileSetAtlasSource_xhimc")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bx8n8"]
+size = Vector2(21.240002, 19.5)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bx8n8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_nw8dj")
+}],
+"loop": 1,
+"name": &"idle_back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_xhimc")
+}],
+"loop": 1,
+"name": &"idle_front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_glv4d")
+}],
+"loop": 1,
+"name": &"idle_side",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_nw8dj")
+}],
+"loop": 1,
+"name": &"walk_back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_xhimc")
+}],
+"loop": 1,
+"name": &"walk_front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_glv4d")
+}],
+"loop": 1,
+"name": &"walk_side",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5h11f"]
+size = Vector2(42, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5h11f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_xhimc")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5iqjx"]
+size = Vector2(32, 32)
+
+[node name="maze" type="Node2D" unique_id=541787293]
+script = ExtResource("1_h41xc")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1675628858]
+tile_set = SubResource("TileSet_5h11f")
+
+[node name="Button" type="Button" parent="." unique_id=1359427139]
+offset_right = 97.0
+offset_bottom = 31.0
+text = "Change maze"
+
+[node name="player" type="CharacterBody2D" parent="." unique_id=658335911]
+position = Vector2(53.24, 48)
+script = ExtResource("3_1nuxl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player" unique_id=120751088]
+position = Vector2(-0.2400055, 0)
+shape = SubResource("RectangleShape2D_bx8n8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="player" unique_id=1117909742]
+position = Vector2(-0.24000168, 0)
+scale = Vector2(0.05, 0.05)
+sprite_frames = SubResource("SpriteFrames_bx8n8")
+animation = &"idle_back"
+
+[node name="Camera2D" type="Camera2D" parent="player" unique_id=993938355]
+
+[node name="Area2D" type="Area2D" parent="player" unique_id=2048517843 groups=["player"]]
+position = Vector2(-64, -48)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player/Area2D" unique_id=1712673091]
+position = Vector2(63.759995, 48)
+shape = SubResource("RectangleShape2D_5h11f")
+
+[node name="object" type="CharacterBody2D" parent="." unique_id=896923059]
+position = Vector2(768, 768)
+script = ExtResource("5_pgab2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="object" unique_id=1127475329]
+position = Vector2(168.00003, 15.000008)
+scale = Vector2(0.039818563, 0.03276212)
+sprite_frames = SubResource("SpriteFrames_5h11f")
+
+[node name="Area2D" type="Area2D" parent="object" unique_id=823069309 groups=["collectible"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="object/Area2D" unique_id=474498280]
+position = Vector2(168, 16)
+shape = SubResource("RectangleShape2D_5iqjx")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="area_entered" from="player/Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_entered" from="player/Area2D" to="player" method="_on_area_2d_area_entered"]
+[connection signal="area_entered" from="player/Area2D" to="object" method="_on_area_2d_area_entered"]
